@@ -1,11 +1,14 @@
-const path    = require("path")
-const webpack = require("webpack")
+const path = require("path");
+const webpack = require("webpack");
 
 module.exports = {
-  mode: "production",
-  devtool: "source-map",
+  mode: "development", // Change mode to development for easier debugging
   entry: {
     application: "./app/javascript/application.js"
+  },
+  output: {
+    filename: "[name].js",
+    path: path.resolve(__dirname, "app/assets/builds"),
   },
   module: {
     rules: [
@@ -16,15 +19,12 @@ module.exports = {
       },
     ],
   },
-  output: {
-    filename: "[name].js",
-    sourceMapFilename: "[name].js.map",
-    chunkFormat: "module",
-    path: path.resolve(__dirname, "app/assets/builds"),
+  resolve: {
+    extensions: ['.js', '.jsx'], // Add .jsx if your components have that extension
   },
   plugins: [
     new webpack.optimize.LimitChunkCountPlugin({
-      maxChunks: 1
-    })
-  ]
-}
+      maxChunks: 1,
+    }),
+  ],
+};
